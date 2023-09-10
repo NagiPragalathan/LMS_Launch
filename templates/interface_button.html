@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Interface with Button</title>
+    <script>
+        // Include the CSRF token in a global JavaScript variable
+        var csrfToken = "{{ csrf_token }}";
+    </script>
+</head>
+<body>
+    <button id="changeTextBtn">open Text</button>
+    <button id="changeTextBtn1">close Text</button>
+    <script>
+        document.getElementById('changeTextBtn').addEventListener('click', function () {
+            var newText = "open"
+            if (newText) {
+                // Make an AJAX request to update the text in the other interface
+                fetch('/update_text', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRFToken': csrfToken,  // Include the CSRF token in the headers
+                    },
+                    body: JSON.stringify({ newText: newText }),
+                })
+                .then(function (response) {
+                    if (response.status === 200) {
+                        console.log('Text updated successfully');
+                    }
+                });
+            }
+        });
+        document.getElementById('changeTextBtn1').addEventListener('click', function () {
+            var newText = "close"
+            if (newText) {
+                // Make an AJAX request to update the text in the other interface
+                fetch('/update_text', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRFToken': csrfToken,  // Include the CSRF token in the headers
+                    },
+                    body: JSON.stringify({ newText: newText }),
+                })
+                .then(function (response) {
+                    if (response.status === 200) {
+                        console.log('Text updated successfully');
+                    }
+                });
+            }
+        });
+    </script>
+</body>
+</html>
